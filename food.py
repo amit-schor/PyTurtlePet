@@ -10,37 +10,36 @@ class Food(SpatialEntity,ABC):
     velocity:np.ndarray
 
 
-    def __init__(self,pos: Tuple[float,float] = None, color: Sequence[int] = None,angle :float = None,image = None):
-        super().__init__(pos = pos,color = color,angle = angle,image = image)
+    def __init__(self,sprite_list_owner,pos: Tuple[float,float] = None,angle :float = None):
+        super().__init__(sprite_list_owner= sprite_list_owner,pos = pos,angle = angle)
         self.velocity=np.array([0,0])
 
     def update(self, delta_time):
-        #x=x_0-0.5gt^2
-        #v+=g/dt
         self.velocity = self.velocity + GRAVITY_CONSTANT/delta_time
         self.pos+=self.velocity*delta_time
         if self.y < FLOOR_HEIGHT:
             self.y = FLOOR_HEIGHT
-
-    def draw_general(self,color) -> object:
-        x, y = self.pos
-        arcade.draw_circle_filled(x,y+20,20,color)
+        self.update_sprite()
 
     @property
     def is_on_floor(self):
         return self.y == FLOOR_HEIGHT
 
+
 class Hasa(Food):
-    def draw(self) -> object:
-        self.draw_general([0,255,0])
+    def make_sprite(self):
+        return self.make_sprite_from_file("images/Lettuce.png")
+
 
 class Strawberry(Food):
-    def draw(self) -> object:
-        self.draw_general([250, 0,0])
+    def make_sprite(self):
+        return self.make_sprite_from_file("images/Strawberry.png")
+
 
 class Lemon(Food):
-      def draw(self) -> object:
-        self.draw_general([250, 250,0])
+    def make_sprite(self):
+        return self.make_sprite_from_file("images/Lemon.png")
+
 
 def get_all_food_types():
     return Hasa,Strawberry,Lemon

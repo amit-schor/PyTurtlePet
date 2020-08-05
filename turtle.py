@@ -5,9 +5,11 @@ from typing import Tuple, List, Generator,Type
 import numpy as np
 from constants import *
 import random
-
+from typing import Tuple,Sequence
 
 class Turtle(SpatialEntity):
+
+
     name: str
     favorite_food: Type[Food]
     is_on_back: bool
@@ -17,15 +19,19 @@ class Turtle(SpatialEntity):
     size: float
     movement_speed: float
     update_generator: Generator
+    color: Sequence[int]
+    right_texture:arcade.Texture
+    left_texture:arcade.Texture
 
-    def __init__(self, name: str = None, x: float = 1, color: Tuple[int, int, int] = None,
-                 favorite_food: Food = None, is_facing_right: bool = None, size: float = None):
+    def __init__(self,sprite_list_owner, name: str = None, x: float = 1, color: Tuple[int, int, int] = None,
+                 favorite_food: Food = None, is_facing_right: bool = None, size: float = 1):
         color = (np.array([179, 191, 100]) + np.random.normal(0, 10, 3).astype(int)) % 256
-        super().__init__((x, FLOOR_HEIGHT), color)
+        self.color = color
+        self.size = size
+        super().__init__(pos = (x, FLOOR_HEIGHT),sprite_list_owner = sprite_list_owner)
         self.is_on_back = False
         self.is_dancing = False
         self.n_hasa_ate = 0
-        self.size = size
         self.movement_speed = 100 + np.random.normal(0, 10)
         self.is_facing_right = True
         self.update_generator = None
@@ -34,11 +40,11 @@ class Turtle(SpatialEntity):
         else:
             self.favorite_food = favorite_food
 
-    def draw(self):
-        x, y = self.pos
-        r = self.size
-        arcade.draw_arc_filled(x, y, r * 2, r * 1.5, self.color, 0, 180)
-        arcade.draw_circle_filled(self.get_head_position(), y + r / 2, r / 3, self.color)
+    def make_sprite(self):
+        sprite = self.make_sprite_from_file(scale=self.size)
+        self.right_texture = arcade.load_texture("images/Turtle.png", mirrored=True)
+        self.left_texture = arcade.load_texture("images/Turtle.png", mirrored=False)
+        return sprite
 
     def get_head_position(self):
         r = self.head_distance_from_pos
@@ -47,9 +53,16 @@ class Turtle(SpatialEntity):
         else:
             return self.x - r
 
+    def update_sprite(self):
+        super().update_sprite()
+        if self.is_facing_right:
+            self.sprite.texture = self.right_texture
+        else:
+            self.sprite.texture = self.left_texture
+
     @property
     def head_distance_from_pos(self):
-        return self.size
+        return self.sprite.width/2
 
     def update(self, delta_time, foods_array: List[Food]):
         if self.update_generator is None:
@@ -57,6 +70,7 @@ class Turtle(SpatialEntity):
             next(self.update_generator)
         else:
             self.update_generator.send(delta_time)
+        self.update_sprite()
 
     def update_generator_maker(self, delta_time, foods_array: List[Food]):
         while True:
@@ -83,6 +97,7 @@ class Turtle(SpatialEntity):
             if targeted_food.is_on_floor:
                 print("tziffffff")
                 foods_array.remove(targeted_food)
+                del targeted_food
                 time_accum = 0
                 while time_accum < 1:
                     delta_time = yield
@@ -122,11 +137,6 @@ class Turtle(SpatialEntity):
         else:
             score = - eta
         return score
-
-
-
-
-
 
     def get_list_of_eating_spots(self, foods_array: List[Food]):
         spot_gap = self.head_distance_from_pos

@@ -1,18 +1,32 @@
 from typing import Tuple,Sequence
 import numpy as np
 from abc import ABC,abstractmethod
+import arcade
 
 class SpatialEntity(ABC):
     pos: np.ndarray
-    color: Sequence[int]
     angle:float
-    image:object
+    sprite:arcade.Sprite
 
-    def __init__(self,pos: Tuple[float,float] = None, color: Sequence[int] = None,angle :float = None,image = None):
+    def __init__(self,pos: Tuple[float,float],sprite_list_owner:arcade.SpriteList,angle :float = 0):
         self.pos = np.array(pos,dtype=float)
-        self.color = color
         self.angle = angle
-        self.image = image
+        self.sprite = self.make_sprite()
+        sprite_list_owner.append(self.sprite)
+
+    def __del__(self):
+        self.sprite.remove_from_sprite_lists()
+
+    @abstractmethod
+    def make_sprite(self) -> arcade.Sprite:
+        pass
+
+    def make_sprite_from_file(self,file_name=None,**kwargs):
+        return arcade.Sprite(file_name, center_x=self.x, center_y=self.y,**kwargs)
+
+    def update_sprite(self):
+        self.sprite.center_x = self.x
+        self.sprite.center_y = self.y + self.sprite.height/2
 
     @property
     def x(self):
@@ -30,5 +44,5 @@ class SpatialEntity(ABC):
     def y(self,val):
         self.pos[1] = val
 
-    def draw(self):
-        pass
+    # def draw(self):
+    #     pass
