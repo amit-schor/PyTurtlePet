@@ -1,0 +1,30 @@
+spontaius events:
+    Dance parties:
+        randome event - some turtle starts to dance, all turtles in his radius will dance as well (turtles that enter the raius will select a point and dance there). turtles from the same party should dance in sinc
+        fourced dance party - all turtles dance.
+
+    turtle tower:
+        has random "raggedness", falls when cener of mass can't be supported by the base. some turtles (randomly chosen) will get stuck on their back after falling. they will stay on thei backs until the user flips them over by clicking them.
+        while idle on thier backs, they eventualy start a three stage idle animation:
+            stage 1 the turtle pulls out sunglasses from his shell.
+            stage 2 the turtle pulls out a sun umbrella and places it
+            stage 3 the turtle retracts into it's shell and the shell has a sweating animation
+
+    turtle elections:
+
+background: two layers of grass one in front one behind the turtles
+
+fruts with mustashes:
+    some fruits have mustashes - most of the turtles will run away from the mustashes and retreat into their shells. but sometimes a turtle will come to attack a mustash it comes charging at x2.0 speed
+    and there is a slashing animation which flings the mustash up into the air where the mustash parishes ( or falls to the ground and then parishes).
+    for dramatic effect it seams better if the attacking turtle would NOT eat the fruit that had a mustash - at least not until he eats a different fruit.
+    every x seconds there is a chance for each turtle to start attacking the mustach, as described above (the chances for this to happen should NOT be without memory, that is to say the chance should grow with time).
+
+flowers + grass for food
+
+automatic feeders that cost money? dressing up turtles cost money? placing fake turtle ears. money is earned by brushing tutle shell.
+you can buy party generator with money
+turtles cost money
+placing random food is free, but placing a selected type of food cost some money
+
+spon
