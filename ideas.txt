@@ -27,4 +27,5 @@ you can buy party generator with money
 turtles cost money
 placing random food is free, but placing a selected type of food cost some money
 
-spon
+turtles with top hats: (the turtles that are candidets to be presidents maby wear top hats?)
+    

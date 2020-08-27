@@ -72,6 +72,7 @@ class Turtle(SpatialEntity):
             self.update_generator.send(delta_time)
         self.update_sprite()
 
+    # contain turtle movment logic
     def update_generator_maker(self, delta_time, foods_array: List[Food]):
         while True:
             while True:
@@ -114,6 +115,9 @@ class Turtle(SpatialEntity):
             return False
         else:
             return True
+
+    def turn_toward_dir(self,target_dir_is_facing_right:bool):
+        pass
 
     def get_eta(self, final_x, is_facing_right_final):
         eta = abs(final_x - self.x)

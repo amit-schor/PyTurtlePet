@@ -33,12 +33,12 @@ class Hasa(Food):
 
 class Strawberry(Food):
     def make_sprite(self):
-        return self.make_sprite_from_file("images/Strawberry.png")
+        return self.make_sprite_from_file("images/Strawberry.png",scale=3)
 
 
 class Lemon(Food):
     def make_sprite(self):
-        return self.make_sprite_from_file("images/Lemon.png")
+        return self.make_sprite_from_file("images/Lemon.png",scale=3)
 
 
 def get_all_food_types():

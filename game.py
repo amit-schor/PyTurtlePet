@@ -4,7 +4,7 @@ from food import Food, Hasa,Strawberry,Lemon
 import math as mp
 import random
 from typing import List
-from constants import *
+import constants
 
 
 class MyGame(arcade.Window):
@@ -26,7 +26,7 @@ class MyGame(arcade.Window):
     def setup(self):
         # n_turt_x, n_turt_y = 10, 6
         # self.turtles_array = [Turtle(name="tzav", x=600, size=300),Turtle(name="tzavi", x=100, size=100),Turtle(name="tzavitzav", x=0, size=10),Turtle(name="tzavitzav", x=10 , size=5)]
-        self.turtles_array = [Turtle(sprite_list_owner=self.sprite_list, name="tzav", x=0, size=1.8),Turtle(sprite_list_owner=self.sprite_list, name="tzavi", x=500, size=1.8),Turtle(sprite_list_owner=self.sprite_list, name="tzavitzav", x=1200, size=1.5),Turtle(sprite_list_owner=self.sprite_list, name="tzavitzav", x=1900 , size=2.3)]
+        self.turtles_array = [Turtle(sprite_list_owner=self.sprite_list, name="tzav", x=0, size=3.0),Turtle(sprite_list_owner=self.sprite_list, name="tzavi", x=500, size=1.8),Turtle(sprite_list_owner=self.sprite_list, name="tzavitzav", x=1200, size=1),Turtle(sprite_list_owner=self.sprite_list, name="tzavitzav", x=1900 , size=2.3)]
         # self.turtles_array = [Turtle(name="tzav", x=600, size=100),Turtle(name="tzavi", x=600, size=100)]
         # self.turtles_array[0].movement_speed=self.turtles_array[1].movement_speed
 
@@ -52,8 +52,8 @@ class MyGame(arcade.Window):
     def on_draw(self):
         """ Draw everything """
         arcade.start_render()
-        arcade.draw_lrtb_rectangle_filled(0, self.get_size()[0], FLOOR_HEIGHT, 0, [30, 150, 40])
-        self.sprite_list.draw()
+        arcade.draw_lrtb_rectangle_filled(0, self.get_size()[0], constants.FLOOR_HEIGHT, 0, [30, 150, 40])
+        self.sprite_list.draw(filter=constants.GL_NEAREST)
 
 
 window = MyGame()
